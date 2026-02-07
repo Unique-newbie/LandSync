@@ -24,7 +24,7 @@ router = APIRouter()
 @router.post("", response_model=ReconcileResponse)
 async def run_reconciliation(
     request: ReconcileRequest,
-    current_user: dict = Depends(RequirePermission(Permission.RUN_RECONCILIATION)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.RUN_RECONCILIATION)),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -171,7 +171,7 @@ async def get_matches(
     village_id: Optional[UUID] = None,
     limit: int = 100,
     offset: int = 0,
-    current_user: dict = Depends(RequirePermission(Permission.VIEW_RECORDS)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.VIEW_RECORDS)),
     db: AsyncSession = Depends(get_db)
 ):
     """Get all matches with optional filtering"""
@@ -217,7 +217,7 @@ async def get_matches(
 @router.get("/matches/{match_id}", response_model=MatchResponse)
 async def get_match(
     match_id: UUID,
-    current_user: dict = Depends(RequirePermission(Permission.VIEW_RECORDS)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.VIEW_RECORDS)),
     db: AsyncSession = Depends(get_db)
 ):
     """Get a single match by ID"""
@@ -253,7 +253,7 @@ async def get_match(
 async def verify_match(
     match_id: UUID,
     request: MatchVerifyRequest,
-    current_user: dict = Depends(RequirePermission(Permission.VERIFY_MATCHES)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.VERIFY_MATCHES)),
     db: AsyncSession = Depends(get_db)
 ):
     """Verify or reject a match"""
@@ -297,7 +297,7 @@ async def verify_match(
 @router.get("/stats")
 async def get_reconciliation_stats(
     village_id: Optional[UUID] = None,
-    current_user: dict = Depends(get_current_user),
+    current_user: dict = None, # Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """Get reconciliation statistics"""

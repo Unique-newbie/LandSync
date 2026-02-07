@@ -1,170 +1,154 @@
-"""Seed comprehensive demo data into the database"""
-
-import asyncio
+"""Comprehensive Demo Data Seeder for LandSync - Fixed Schema"""
+import sqlite3
+import uuid
 import json
 import random
 from datetime import datetime
-import sys
-import os
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+conn = sqlite3.connect('LandSync.db')
+cursor = conn.cursor()
 
-from app.core.database import AsyncSessionLocal, async_engine
-from app.models.models import Base, Village, Parcel, TextRecord, Match
-from sqlalchemy import select
+print("=== LandSync Demo Data Seeder ===")
 
+# Clear existing demo data
+print("Clearing old data...")
+cursor.execute("DELETE FROM matches")
+cursor.execute("DELETE FROM text_records")
+cursor.execute("DELETE FROM parcels")
+cursor.execute("DELETE FROM villages")
+conn.commit()
 
-DEMO_VILLAGES = [
-    {"village_id": "RAJ-JOD-001", "name": "Mandore", "name_hindi": "Mandore", "district": "Jodhpur", "tehsil": "Jodhpur", "state": "Rajasthan"},
-    {"village_id": "RAJ-JAI-001", "name": "Sanganer", "name_hindi": "Sanganer", "district": "Jaipur", "tehsil": "Sanganer", "state": "Rajasthan"},
-    {"village_id": "RAJ-UDA-001", "name": "Gogunda", "name_hindi": "Gogunda", "district": "Udaipur", "tehsil": "Gogunda", "state": "Rajasthan"},
+OWNER_NAMES = [
+    "Ramesh Kumar", "Suresh Sharma", "Mahesh Verma", "Rajesh Singh",
+    "Mukesh Yadav", "Dinesh Patel", "Ganesh Gupta", "Lokesh Joshi",
+    "Naresh Agarwal", "Hitesh Mittal", "Pradeep Chauhan", "Sandeep Rathore",
+    "Kuldeep Meena", "Hardeep Saini", "Jaspreet Kaur", "Manpreet Singh"
 ]
 
-DEMO_OWNERS = [
-    "Ramesh Kumar", "Suresh Singh", "Mahendra Sharma", "Rajendra Patel",
-    "Govind Meena", "Lakshmi Devi", "Kailash Chand", "Bhagwan Das",
-    "Mohan Lal", "Shanti Bai", "Ratan Singh", "Prema Ram",
+VILLAGES = [
+    {"name": "Mandore", "district": "Jodhpur", "tehsil": "Jodhpur", "state": "Rajasthan"},
+    {"name": "Osian", "district": "Jodhpur", "tehsil": "Osian", "state": "Rajasthan"},
+    {"name": "Phalodi", "district": "Jodhpur", "tehsil": "Phalodi", "state": "Rajasthan"},
+    {"name": "Bilara", "district": "Jodhpur", "tehsil": "Bilara", "state": "Rajasthan"},
+    {"name": "Pipar", "district": "Jodhpur", "tehsil": "Pipar", "state": "Rajasthan"},
 ]
 
+village_ids = []
 
-def generate_polygon(center_lat, center_lon, size=0.001):
-    return {
-        "type": "Polygon",
-        "coordinates": [[
-            [center_lon - size, center_lat - size],
-            [center_lon + size, center_lat - size],
-            [center_lon + size, center_lat + size],
-            [center_lon - size, center_lat + size],
-            [center_lon - size, center_lat - size]
-        ]]
-    }
+# Create Villages - matching actual schema
+print("Creating villages...")
+for v in VILLAGES:
+    vid = str(uuid.uuid4())
+    village_ids.append(vid)
+    cursor.execute("""
+        INSERT INTO villages (id, village_id, name, name_hindi, district, tehsil, state, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, (vid, f"VIL-{random.randint(1000,9999)}", v["name"], v["name"] + " (Hindi)", 
+          v["district"], v["tehsil"], v["state"], datetime.now().isoformat()))
+print(f"  Created {len(VILLAGES)} villages")
 
+# Create Parcels and Text Records
+print("Creating parcels and text records...")
+all_parcels = []
+all_records = []
 
-async def seed_demo_data():
-    async with async_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+for village_idx, village_id in enumerate(village_ids):
+    village_name = VILLAGES[village_idx]["name"]
+    num_parcels = random.randint(8, 12)
     
-    async with AsyncSessionLocal() as session:
-        result = await session.execute(select(Village))
-        if result.scalars().first():
-            print("[SKIP] Demo data already exists")
-            return
+    for i in range(num_parcels):
+        parcel_id = str(uuid.uuid4())
+        plot_id = f"{village_name[:3].upper()}/{random.randint(100, 999)}/{i+1}"
+        owner = random.choice(OWNER_NAMES)
+        area = round(random.uniform(500, 5000), 2)
         
-        print("[START] Creating demo data...")
-        
-        villages = []
-        for v_data in DEMO_VILLAGES:
-            village = Village(**v_data)
-            session.add(village)
-            villages.append(village)
-        await session.flush()
-        print(f"[OK] Created {len(villages)} villages")
-        
-        village_coords = {
-            "RAJ-JOD-001": (26.2389, 73.0243),
-            "RAJ-JAI-001": (26.8269, 75.7869),
-            "RAJ-UDA-001": (24.5854, 73.7125),
+        base_lat = 26.2 + village_idx * 0.05
+        base_lon = 73.0 + village_idx * 0.05
+        geometry = {
+            "type": "Polygon",
+            "coordinates": [[
+                [base_lon + i*0.008, base_lat],
+                [base_lon + i*0.008 + 0.006, base_lat],
+                [base_lon + i*0.008 + 0.006, base_lat + 0.005],
+                [base_lon + i*0.008, base_lat + 0.005],
+                [base_lon + i*0.008, base_lat]
+            ]]
         }
         
-        all_parcels = []
-        all_text_records = []
+        cursor.execute("""
+            INSERT INTO parcels (id, plot_id, owner_name, owner_name_hindi, area_sqm, area_hectares,
+                                 geometry_json, centroid_lat, centroid_lng, village_id, status,
+                                 source_file, attributes_json, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (parcel_id, plot_id, owner, owner + " (Hindi)", area, round(area/10000, 4),
+              json.dumps(geometry), base_lat + 0.0025, base_lon + i*0.008 + 0.003, village_id, "active",
+              "demo_seed.py", json.dumps({"land_type": random.choice(["agricultural", "residential"])}),
+              datetime.now().isoformat(), datetime.now().isoformat()))
         
-        for village in villages:
-            base_lat, base_lon = village_coords.get(village.village_id, (26.0, 73.0))
-            num_parcels = random.randint(15, 20)
-            
-            for i in range(num_parcels):
-                owner_name = random.choice(DEMO_OWNERS)
-                plot_id = f"{village.village_id}-{i+1:03d}"
-                
-                lat = base_lat + random.uniform(-0.02, 0.02)
-                lng = base_lon + random.uniform(-0.02, 0.02)
-                area_sqm = random.uniform(500, 5000)
-                
-                geometry = generate_polygon(lat, lng, size=random.uniform(0.0005, 0.002))
-                
-                parcel = Parcel(
-                    plot_id=plot_id,
-                    owner_name=owner_name,
-                    owner_name_hindi=owner_name,
-                    area_sqm=area_sqm,
-                    area_hectares=area_sqm / 10000,
-                    area_bigha=area_sqm / 2500,
-                    geometry_json=json.dumps(geometry),
-                    centroid_lat=lat,
-                    centroid_lng=lng,
-                    village_id=village.id,
-                    source_file="demo_data.geojson"
-                )
-                session.add(parcel)
-                all_parcels.append(parcel)
-                
-                if random.random() < 0.8:
-                    record_owner = owner_name
-                    record_area = area_sqm * random.uniform(0.98, 1.02)
-                else:
-                    record_owner = owner_name.replace("Kumar", "Kr.").replace("Singh", "S.")
-                    record_area = area_sqm * random.uniform(0.9, 1.1)
-                
-                text_record = TextRecord(
-                    record_id=f"REC-{plot_id}",
-                    plot_id=plot_id,
-                    owner_name=record_owner,
-                    owner_name_hindi=record_owner,
-                    father_name=random.choice(DEMO_OWNERS),
-                    khata_number=f"KH-{random.randint(100, 999)}",
-                    khasra_number=f"{random.randint(1, 500)}/{random.randint(1, 20)}",
-                    area_declared=record_area,
-                    area_unit="sqm",
-                    village_id=village.id,
-                    source_file="demo_jamabandi.xlsx"
-                )
-                session.add(text_record)
-                all_text_records.append(text_record)
-            
-            print(f"[OK] Created {num_parcels} parcels for {village.name}")
+        all_parcels.append({"id": parcel_id, "plot_id": plot_id, "owner": owner, "area": area, "village_id": village_id})
         
-        await session.flush()
+        # Create matching Text Record
+        record_id = str(uuid.uuid4())
+        record_area = area + random.uniform(-50, 50)
+        record_owner = owner if random.random() > 0.15 else owner.replace("Kumar", "Kumaar")
         
-        matches_created = 0
-        for parcel, text_record in zip(all_parcels, all_text_records):
-            name_match = 100 if parcel.owner_name == text_record.owner_name else random.uniform(70, 95)
-            area_diff = abs(float(parcel.area_sqm) - float(text_record.area_declared)) / float(parcel.area_sqm) * 100
-            area_match = max(0, 100 - area_diff * 5)
-            id_match = 100 if parcel.plot_id == text_record.plot_id else 0
-            
-            overall_score = (name_match * 0.4 + area_match * 0.3 + id_match * 0.3)
-            
-            if overall_score >= 90:
-                status = "matched"
-                confidence = "high"
-            elif overall_score >= 70:
-                status = "partial"
-                confidence = "medium"
-            else:
-                status = "mismatch"
-                confidence = "low"
-            
-            match = Match(
-                parcel_id=parcel.id,
-                text_record_id=text_record.id,
-                match_score=overall_score,
-                name_score=name_match,
-                area_score=area_match,
-                id_score=id_match,
-                status=status,
-                confidence_level=confidence,
-                algorithm_details_json=json.dumps({"algorithm": "combined"})
-            )
-            session.add(match)
-            matches_created += 1
+        cursor.execute("""
+            INSERT INTO text_records (id, record_id, plot_id, owner_name, owner_name_hindi, area_declared,
+                                      area_unit, village_id, khata_number, khasra_number, father_name,
+                                      source_file, raw_data_json, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (record_id, f"REC-{random.randint(10000,99999)}", plot_id, record_owner, record_owner + " (Hindi)",
+              round(record_area, 2), "sqm", village_id, f"K-{random.randint(100,999)}", 
+              f"KH-{random.randint(1000,9999)}", f"S/o {random.choice(OWNER_NAMES)}", 
+              "demo_seed.py", json.dumps({"source": "jamabandi"}),
+              datetime.now().isoformat(), datetime.now().isoformat()))
         
-        print(f"[OK] Created {matches_created} matches")
-        
-        await session.commit()
-        print("[DONE] Demo data complete!")
-        print(f"Summary: {len(villages)} villages, {len(all_parcels)} parcels, {matches_created} matches")
+        all_records.append({"id": record_id, "plot_id": plot_id, "owner": record_owner, "area": record_area, "village_id": village_id})
 
+print(f"  Created {len(all_parcels)} parcels and {len(all_records)} text records")
 
-if __name__ == "__main__":
-    asyncio.run(seed_demo_data())
+# Create Matches
+print("Creating matches...")
+match_count = 0
+for i, parcel in enumerate(all_parcels):
+    if i < len(all_records):
+        record = all_records[i]
+        match_id = str(uuid.uuid4())
+        
+        name_score = random.uniform(80, 100) if parcel["owner"] == record["owner"] else random.uniform(65, 85)
+        area_diff = abs(parcel["area"] - record["area"]) / parcel["area"] * 100
+        area_score = max(0, 100 - area_diff * 2)
+        id_score = 100.0
+        total_score = (name_score * 0.4 + area_score * 0.3 + id_score * 0.3)
+        
+        if total_score >= 85:
+            status = "matched"
+            confidence = "high"
+        elif total_score >= 70:
+            status = "partial"
+            confidence = "medium"
+        else:
+            status = "mismatch"
+            confidence = "low"
+        
+        cursor.execute("""
+            INSERT INTO matches (id, parcel_id, text_record_id, match_score, name_score, area_score, 
+                                id_score, status, confidence_level, algorithm_details_json, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (match_id, parcel["id"], record["id"], round(total_score, 2), 
+              round(name_score, 2), round(area_score, 2), round(id_score, 2),
+              status, confidence, json.dumps({"algorithm": "combined", "area_tolerance": 10}),
+              datetime.now().isoformat(), datetime.now().isoformat()))
+        match_count += 1
+
+print(f"  Created {match_count} matches")
+
+conn.commit()
+conn.close()
+
+print("\n=== Demo Data Seeding Complete ===")
+print(f"Villages: {len(VILLAGES)}")
+print(f"Parcels: {len(all_parcels)}")
+print(f"Text Records: {len(all_records)}")
+print(f"Matches: {match_count}")
+print("\nRefresh your browser to see the data!")

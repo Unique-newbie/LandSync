@@ -45,6 +45,11 @@ const Icons = {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>
     ),
+    API: () => (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+    ),
 }
 
 const navItems = [
@@ -54,6 +59,7 @@ const navItems = [
     { path: '/search', icon: Icons.Search, label: 'Search', labelHi: 'खोजें' },
     { path: '/reconciliation', icon: Icons.Reconcile, label: 'Reconciliation', labelHi: 'सामंजस्य' },
     { path: '/reports', icon: Icons.Reports, label: 'Reports', labelHi: 'रिपोर्ट' },
+    { path: '/api-access', icon: Icons.API, label: 'Bank API', labelHi: 'बैंक API' },
 ]
 
 export default function Layout() {
@@ -69,58 +75,109 @@ export default function Layout() {
     return (
         <div className="flex min-h-screen bg-gray-50">
             {/* Sidebar */}
-            <aside className="sidebar fixed left-0 top-0 h-full flex flex-col">
-                {/* Logo */}
-                <div className="p-4 border-b border-white/10">
-                    <div className="gov-header h-1 rounded-full mb-3" />
-                    <h1 className="text-xl font-bold">LandSync</h1>
-                    <p className="text-xs text-gray-400 font-hindi">भूमि अभिलेख मंच</p>
+            <aside className="fixed left-0 top-0 h-full w-72 flex flex-col shadow-2xl z-50" style={{ background: 'linear-gradient(180deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)' }}>
+                {/* Tricolor accent */}
+                <div className="h-1 w-full flex">
+                    <div className="flex-1 bg-orange-500" />
+                    <div className="flex-1 bg-white" />
+                    <div className="flex-1 bg-green-600" />
+                </div>
+
+                {/* Logo Section */}
+                <div className="p-6 border-b border-white/10">
+                    <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-orange-400 via-white to-green-500 rounded-xl flex items-center justify-center shadow-lg">
+                            <span className="text-2xl">🏛️</span>
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-bold text-white tracking-wide">LandSync</h1>
+                            <p className="text-xs text-blue-300 font-hindi">भूमि अभिलेख मंच</p>
+                        </div>
+                    </div>
+                    <div className="mt-4 text-xs text-blue-400 flex items-center gap-2">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        System Online
+                    </div>
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 py-4">
+                <nav className="flex-1 py-4 px-3 overflow-y-auto">
+                    <p className="text-xs text-blue-400 uppercase tracking-wider px-3 mb-3">Main Menu</p>
                     {navItems.map((item) => (
                         <NavLink
                             key={item.path}
                             to={item.path}
                             end={item.path === '/'}
                             className={({ isActive }) =>
-                                `sidebar-link ${isActive ? 'active' : ''}`
+                                `group flex items-center gap-3 px-4 py-3 mb-1 rounded-xl transition-all duration-200 ${isActive
+                                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/30'
+                                    : 'text-blue-200 hover:bg-white/5 hover:text-white'
+                                }`
                             }
                         >
-                            <item.icon />
-                            <div>
-                                <span className="block">{item.label}</span>
-                                <span className="text-xs text-gray-400 font-hindi">{item.labelHi}</span>
+                            <div className="group-hover:scale-110 transition-transform">
+                                <item.icon />
                             </div>
+                            <div className="flex-1">
+                                <span className="block text-sm font-medium">{item.label}</span>
+                                <span className="text-[10px] text-blue-400 group-hover:text-blue-300 font-hindi">{item.labelHi}</span>
+                            </div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-current opacity-0 group-hover:opacity-50 transition-opacity" />
                         </NavLink>
                     ))}
                 </nav>
 
-                {/* User Section */}
-                <div className="p-4 border-t border-white/10">
-                    <NavLink to="/settings" className="sidebar-link">
+                {/* Bottom Section */}
+                <div className="p-4 border-t border-white/10 space-y-3">
+                    {/* Settings Link */}
+                    <NavLink
+                        to="/settings"
+                        className={({ isActive }) =>
+                            `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive
+                                ? 'bg-white/10 text-white'
+                                : 'text-blue-300 hover:bg-white/5 hover:text-white'
+                            }`
+                        }
+                    >
                         <Icons.Settings />
-                        <span>Settings</span>
+                        <span className="text-sm">Settings</span>
                     </NavLink>
 
-                    <div className="mt-4 p-3 bg-white/5 rounded-lg">
-                        <p className="text-sm font-medium">{user?.fullName || 'User'}</p>
-                        <p className="text-xs text-gray-400">{user?.role || 'Officer'}</p>
+                    {/* User Card */}
+                    <div className="bg-gradient-to-r from-white/10 to-white/5 rounded-xl p-4 backdrop-blur-sm">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                                {user?.fullName?.charAt(0) || 'A'}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-white truncate">{user?.fullName || 'Admin User'}</p>
+                                <p className="text-xs text-blue-300 truncate">{user?.role || 'Administrator'}</p>
+                            </div>
+                        </div>
                     </div>
 
+                    {/* Logout Button */}
                     <button
                         onClick={handleLogout}
-                        className="sidebar-link w-full mt-2 text-red-300 hover:text-red-200"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 rounded-xl transition-all border border-red-500/20"
                     >
                         <Icons.Logout />
-                        <span>Logout</span>
+                        <span className="text-sm font-medium">Logout</span>
                     </button>
+                </div>
+
+                {/* Footer */}
+                <div className="p-4 text-center border-t border-white/5">
+                    <p className="text-[10px] text-blue-400">© 2024 Government of India</p>
+                    <p className="text-[10px] text-blue-500 font-hindi">भारत सरकार</p>
                 </div>
             </aside>
 
             {/* Main Content */}
-            <main className="ml-64 flex-1 p-6">
+            <main className="ml-72 flex-1 p-8 min-h-screen">
                 <Outlet />
             </main>
         </div>

@@ -9,6 +9,7 @@ import Search from './pages/Search'
 import Reconciliation from './pages/Reconciliation'
 import Reports from './pages/Reports'
 import Settings from './pages/Settings'
+import APIAccess from './pages/APIAccess'
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -37,6 +38,7 @@ function App() {
                 <Route path="search" element={<Search />} />
                 <Route path="reconciliation" element={<Reconciliation />} />
                 <Route path="reports" element={<Reports />} />
+                <Route path="api-access" element={<APIAccess />} />
                 <Route path="settings" element={<Settings />} />
             </Route>
 

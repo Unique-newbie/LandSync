@@ -81,15 +81,23 @@ async def upload_spatial_data(
         # Insert parcels
         records_count = 0
         for parcel_data in parcels_data:
+            # Get geometry as JSON string
+            geometry_data = parcel_data.get("geometry_geojson") or parcel_data.get("geometry")
+            geometry_json_str = json.dumps(geometry_data) if geometry_data else None
+            
+            # Get attributes as JSON string
+            attrs = parcel_data.get("attributes", {})
+            attrs_json_str = json.dumps(attrs) if attrs else None
+            
             parcel = Parcel(
                 plot_id=parcel_data.get("plot_id", f"P_{records_count}"),
                 owner_name=parcel_data.get("owner_name", "Unknown"),
                 area_sqm=parcel_data.get("area_sqm", 0),
                 area_hectares=parcel_data.get("area_sqm", 0) / 10000,
-                geometry=parcel_data.get("geometry_wkb"),
+                geometry_json=geometry_json_str,
                 village_id=village_uuid,
                 source_file=file.filename,
-                attributes=parcel_data.get("attributes", {})
+                attributes_json=attrs_json_str
             )
             db.add(parcel)
             records_count += 1
@@ -178,6 +186,9 @@ async def upload_text_data(
         # Insert text records
         records_count = 0
         for record_data in records_data:
+            # Convert raw data to JSON string
+            raw_data_json_str = json.dumps(record_data) if record_data else None
+            
             record = TextRecord(
                 record_id=record_data.get("record_id", f"R_{records_count}"),
                 plot_id=record_data.get("plot_id", ""),
@@ -189,7 +200,7 @@ async def upload_text_data(
                 khasra_number=record_data.get("khasra_number"),
                 father_name=record_data.get("father_name"),
                 source_file=file.filename,
-                raw_data=record_data
+                raw_data_json=raw_data_json_str
             )
             db.add(record)
             records_count += 1

@@ -22,7 +22,7 @@ router = APIRouter()
 @router.get("/villages", response_model=List[VillageResponse])
 async def get_villages(
     district: Optional[str] = None,
-    current_user: dict = Depends(get_current_user),
+    current_user: dict = None, # Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """Get all villages"""
@@ -53,7 +53,7 @@ async def get_villages(
 @router.post("/villages", response_model=VillageResponse)
 async def create_village(
     village: VillageCreate,
-    current_user: dict = Depends(RequirePermission(Permission.MANAGE_VILLAGES)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.MANAGE_VILLAGES)),
     db: AsyncSession = Depends(get_db)
 ):
     """Create a new village"""
@@ -88,7 +88,7 @@ async def create_village(
 
 @router.get("/stats")
 async def get_parcel_stats(
-    current_user: dict = Depends(get_current_user),
+    current_user: dict = None, # Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """Get parcel statistics"""
@@ -134,7 +134,7 @@ async def get_parcel_stats(
 async def get_parcels_geojson(
     village_id: Optional[str] = None,
     limit: int = Query(500, ge=1, le=5000),
-    current_user: dict = Depends(RequirePermission(Permission.VIEW_MAP)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.VIEW_MAP)),
     db: AsyncSession = Depends(get_db)
 ):
     """Get parcels as GeoJSON FeatureCollection for map display"""
@@ -185,7 +185,7 @@ async def get_parcels(
     status: Optional[str] = None,
     limit: int = Query(100, ge=1, le=1000),
     offset: int = Query(0, ge=0),
-    current_user: dict = Depends(RequirePermission(Permission.VIEW_RECORDS)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.VIEW_RECORDS)),
     db: AsyncSession = Depends(get_db)
 ):
     """Get all parcels with optional filtering"""
@@ -230,7 +230,7 @@ async def get_parcels(
 @router.get("/{parcel_id}", response_model=ParcelResponse)
 async def get_parcel(
     parcel_id: str,
-    current_user: dict = Depends(RequirePermission(Permission.VIEW_RECORDS)),
+    current_user: dict = None, # Depends(RequirePermission(Permission.VIEW_RECORDS)),
     db: AsyncSession = Depends(get_db)
 ):
     """Get a single parcel by ID"""

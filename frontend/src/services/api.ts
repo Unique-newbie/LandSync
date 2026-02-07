@@ -77,6 +77,11 @@ export const parcelsAPI = {
         const response = await api.patch(`/parcels/${id}`, data)
         return response.data
     },
+
+    getStats: async () => {
+        const response = await api.get('/parcels/stats')
+        return response.data
+    },
 }
 
 // Villages API
@@ -140,26 +145,28 @@ export const searchAPI = {
 // Reconciliation API
 export const reconcileAPI = {
     run: async (villageId: string, algorithm?: string, threshold?: number) => {
-        const response = await api.post('/reconcile/run', {
+        const response = await api.post('/reconcile', {
             village_id: villageId,
-            algorithm,
-            threshold,
+            algorithm: algorithm || 'combined',
+            area_tolerance: threshold || 10,
         })
         return response.data
     },
 
-    getMatches: async (villageId: string) => {
-        const response = await api.get(`/reconcile/matches/${villageId}`)
+    getMatches: async (villageId?: string) => {
+        const response = await api.get('/reconcile/matches', { params: { village_id: villageId } })
         return response.data
     },
 
-    getStats: async (villageId: string) => {
-        const response = await api.get(`/reconcile/stats/${villageId}`)
+    getStats: async (villageId?: string) => {
+        const response = await api.get('/reconcile/stats', { params: { village_id: villageId } })
         return response.data
     },
 
     verifyMatch: async (matchId: string, verified: boolean) => {
-        const response = await api.patch(`/reconcile/matches/${matchId}`, { verified })
+        const response = await api.post(`/reconcile/matches/${matchId}/verify`, {
+            status: verified ? 'verified' : 'rejected'
+        })
         return response.data
     },
 }

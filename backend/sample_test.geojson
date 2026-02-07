@@ -1,0 +1,40 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "plot_id": "TEST_001",
+                "owner_name": "Test User",
+                "area_sqm": 1000
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            77.0,
+                            28.0
+                        ],
+                        [
+                            77.01,
+                            28.0
+                        ],
+                        [
+                            77.01,
+                            28.01
+                        ],
+                        [
+                            77.0,
+                            28.01
+                        ],
+                        [
+                            77.0,
+                            28.0
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}
