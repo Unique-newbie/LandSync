@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650">
+  <rect width="1000" height="650" fill="#0f172a"/>
+  <text x="500" y="35" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#667eea">Component Diagram</text>
+
+  <!-- Frontend Package -->
+  <rect x="50" y="60" width="280" height="180" rx="8" fill="#1e293b" stroke="#4facfe" stroke-width="2"/>
+  <text x="70" y="85" font-family="Arial" font-size="14" font-weight="bold" fill="#4facfe">«package» Frontend</text>
+  
+  <rect x="70" y="100" width="110" height="35" rx="5" fill="#0f172a" stroke="#4facfe"/>
+  <text x="125" y="123" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">React App</text>
+  
+  <rect x="70" y="145" width="110" height="35" rx="5" fill="#0f172a" stroke="#4facfe"/>
+  <text x="125" y="168" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Leaflet Maps</text>
+  
+  <rect x="195" y="100" width="110" height="35" rx="5" fill="#0f172a" stroke="#4facfe"/>
+  <text x="250" y="123" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Redux Store</text>
+  
+  <rect x="195" y="145" width="110" height="35" rx="5" fill="#0f172a" stroke="#4facfe"/>
+  <text x="250" y="168" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">API Client</text>
+  
+  <rect x="70" y="190" width="235" height="35" rx="5" fill="#0f172a" stroke="#4facfe"/>
+  <text x="187" y="213" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Dashboard Components</text>
+
+  <!-- Backend Package -->
+  <rect x="360" y="60" width="280" height="220" rx="8" fill="#1e293b" stroke="#43e97b" stroke-width="2"/>
+  <text x="380" y="85" font-family="Arial" font-size="14" font-weight="bold" fill="#43e97b">«package» Backend</text>
+  
+  <rect x="380" y="100" width="110" height="35" rx="5" fill="#0f172a" stroke="#43e97b"/>
+  <text x="435" y="123" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">FastAPI Core</text>
+  
+  <rect x="510" y="100" width="110" height="35" rx="5" fill="#0f172a" stroke="#43e97b"/>
+  <text x="565" y="123" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Auth Service</text>
+  
+  <rect x="380" y="145" width="110" height="35" rx="5" fill="#0f172a" stroke="#43e97b"/>
+  <text x="435" y="168" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Upload Service</text>
+  
+  <rect x="510" y="145" width="110" height="35" rx="5" fill="#0f172a" stroke="#43e97b"/>
+  <text x="565" y="168" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Search Service</text>
+  
+  <rect x="380" y="190" width="110" height="35" rx="5" fill="#0f172a" stroke="#43e97b"/>
+  <text x="435" y="213" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Report Service</text>
+  
+  <rect x="510" y="190" width="110" height="35" rx="5" fill="#0f172a" stroke="#43e97b"/>
+  <text x="565" y="213" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">GraphQL</text>
+  
+  <rect x="380" y="235" width="240" height="35" rx="5" fill="#0f172a" stroke="#43e97b"/>
+  <text x="500" y="258" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">API Endpoints (REST + GraphQL)</text>
+
+  <!-- Processing Package -->
+  <rect x="670" y="60" width="280" height="180" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+  <text x="690" y="85" font-family="Arial" font-size="14" font-weight="bold" fill="#ec4899">«package» Processing</text>
+  
+  <rect x="690" y="100" width="110" height="35" rx="5" fill="#0f172a" stroke="#ec4899"/>
+  <text x="745" y="123" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">GIS Engine</text>
+  
+  <rect x="820" y="100" width="110" height="35" rx="5" fill="#0f172a" stroke="#ec4899"/>
+  <text x="875" y="123" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Match Engine</text>
+  
+  <rect x="690" y="145" width="110" height="35" rx="5" fill="#0f172a" stroke="#ec4899"/>
+  <text x="745" y="168" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">GDAL/OGR</text>
+  
+  <rect x="820" y="145" width="110" height="35" rx="5" fill="#0f172a" stroke="#ec4899"/>
+  <text x="875" y="168" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">RapidFuzz</text>
+  
+  <rect x="690" y="190" width="240" height="35" rx="5" fill="#0f172a" stroke="#ec4899"/>
+  <text x="810" y="213" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">GeoPandas • Shapely</text>
+
+  <!-- Data Package -->
+  <rect x="50" y="300" width="280" height="140" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="70" y="325" font-family="Arial" font-size="14" font-weight="bold" fill="#f59e0b">«package» Data</text>
+  
+  <rect x="70" y="340" width="235" height="35" rx="5" fill="#0f172a" stroke="#f59e0b"/>
+  <text x="187" y="363" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">PostgreSQL + PostGIS</text>
+  
+  <rect x="70" y="385" width="110" height="35" rx="5" fill="#0f172a" stroke="#f59e0b"/>
+  <text x="125" y="408" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Redis Cache</text>
+  
+  <rect x="195" y="385" width="110" height="35" rx="5" fill="#0f172a" stroke="#f59e0b"/>
+  <text x="250" y="408" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">File Storage</text>
+
+  <!-- Gov Integration Package -->
+  <rect x="360" y="300" width="280" height="180" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+  <text x="380" y="325" font-family="Arial" font-size="14" font-weight="bold" fill="#a855f7">«package» GovServices</text>
+  
+  <rect x="380" y="340" width="110" height="30" rx="5" fill="#0f172a" stroke="#a855f7"/>
+  <text x="435" y="360" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">Aadhaar Auth</text>
+  
+  <rect x="510" y="340" width="110" height="30" rx="5" fill="#0f172a" stroke="#a855f7"/>
+  <text x="565" y="360" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">DigiLocker</text>
+  
+  <rect x="380" y="380" width="110" height="30" rx="5" fill="#0f172a" stroke="#a855f7"/>
+  <text x="435" y="400" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">Bhulekh</text>
+  
+  <rect x="510" y="380" width="110" height="30" rx="5" fill="#0f172a" stroke="#a855f7"/>
+  <text x="565" y="400" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">eSign</text>
+  
+  <rect x="380" y="420" width="110" height="30" rx="5" fill="#0f172a" stroke="#a855f7"/>
+  <text x="435" y="440" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">UPI/Payments</text>
+  
+  <rect x="510" y="420" width="110" height="30" rx="5" fill="#0f172a" stroke="#a855f7"/>
+  <text x="565" y="440" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">SMS Gateway</text>
+
+  <!-- Infrastructure Package -->
+  <rect x="670" y="300" width="280" height="140" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+  <text x="690" y="325" font-family="Arial" font-size="14" font-weight="bold" fill="#64748b">«package» Infra</text>
+  
+  <rect x="690" y="340" width="110" height="35" rx="5" fill="#0f172a" stroke="#64748b"/>
+  <text x="745" y="363" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Nginx</text>
+  
+  <rect x="820" y="340" width="110" height="35" rx="5" fill="#0f172a" stroke="#64748b"/>
+  <text x="875" y="363" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Docker</text>
+  
+  <rect x="690" y="385" width="240" height="35" rx="5" fill="#0f172a" stroke="#64748b"/>
+  <text x="810" y="408" text-anchor="middle" font-family="Arial" font-size="10" fill="#94a3b8">Docker Compose</text>
+
+  <!-- Dependencies -->
+  <line x1="330" y1="150" x2="360" y2="150" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="640" y1="150" x2="670" y2="150" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="500" y1="280" x2="500" y2="300" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="190" y1="240" x2="190" y2="300" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="810" y1="240" x2="810" y2="300" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+
+  <!-- Legend -->
+  <rect x="50" y="500" width="300" height="60" rx="5" fill="#1e293b" stroke="#334155"/>
+  <text x="65" y="525" font-family="Arial" font-size="11" font-weight="bold" fill="#94a3b8">Legend:</text>
+  <rect x="120" y="512" width="25" height="18" rx="3" fill="none" stroke="#4facfe" stroke-width="2"/>
+  <text x="155" y="525" font-family="Arial" font-size="10" fill="#94a3b8">Package</text>
+  <line x1="220" y1="520" x2="270" y2="520" stroke="#60a5fa" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="280" y="525" font-family="Arial" font-size="10" fill="#94a3b8">Dependency</text>
+</svg>

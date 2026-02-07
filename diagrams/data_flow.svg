@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600">
+  <rect width="1000" height="600" fill="#0f172a"/>
+  <text x="500" y="35" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#667eea">Data Flow Diagram</text>
+  
+  <!-- Entities -->
+  <rect x="40" y="100" width="100" height="50" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="90" y="130" text-anchor="middle" font-family="Arial" font-size="12" fill="#f59e0b">Surveyor</text>
+  
+  <rect x="40" y="280" width="100" height="50" rx="5" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="90" y="310" text-anchor="middle" font-family="Arial" font-size="12" fill="#3b82f6">Officer</text>
+  
+  <rect x="40" y="460" width="100" height="50" rx="5" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+  <text x="90" y="490" text-anchor="middle" font-family="Arial" font-size="12" fill="#ef4444">Admin</text>
+  
+  <rect x="860" y="280" width="100" height="50" rx="5" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+  <text x="910" y="310" text-anchor="middle" font-family="Arial" font-size="11" fill="#a855f7">Gov Portal</text>
+
+  <!-- Processes -->
+  <circle cx="230" cy="125" r="40" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="230" y="120" text-anchor="middle" font-family="Arial" font-size="10" fill="#22c55e">1.0</text>
+  <text x="230" y="135" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">Ingestion</text>
+  
+  <circle cx="400" cy="125" r="40" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+  <text x="400" y="120" text-anchor="middle" font-family="Arial" font-size="10" fill="#06b6d4">2.0</text>
+  <text x="400" y="135" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">GIS</text>
+  
+  <circle cx="570" cy="200" r="45" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+  <text x="570" y="195" text-anchor="middle" font-family="Arial" font-size="10" fill="#ec4899">3.0</text>
+  <text x="570" y="210" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">Reconcile</text>
+  
+  <circle cx="400" cy="305" r="40" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="400" y="300" text-anchor="middle" font-family="Arial" font-size="10" fill="#3b82f6">4.0</text>
+  <text x="400" y="315" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">Verify</text>
+  
+  <circle cx="570" cy="400" r="40" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="570" y="395" text-anchor="middle" font-family="Arial" font-size="10" fill="#22c55e">5.0</text>
+  <text x="570" y="410" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">Reports</text>
+  
+  <circle cx="730" cy="305" r="40" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+  <text x="730" y="300" text-anchor="middle" font-family="Arial" font-size="10" fill="#a855f7">6.0</text>
+  <text x="730" y="315" text-anchor="middle" font-family="Arial" font-size="9" fill="#94a3b8">Gov Sync</text>
+
+  <!-- Data Stores -->
+  <line x1="280" y1="220" x2="450" y2="220" stroke="#f59e0b" stroke-width="2"/>
+  <line x1="280" y1="245" x2="450" y2="245" stroke="#f59e0b" stroke-width="2"/>
+  <text x="365" y="237" text-anchor="middle" font-family="Arial" font-size="11" fill="#f59e0b">D1 Parcels</text>
+  
+  <line x1="620" y1="100" x2="790" y2="100" stroke="#ec4899" stroke-width="2"/>
+  <line x1="620" y1="125" x2="790" y2="125" stroke="#ec4899" stroke-width="2"/>
+  <text x="705" y="117" text-anchor="middle" font-family="Arial" font-size="11" fill="#ec4899">D2 Records</text>
+  
+  <line x1="650" y1="220" x2="820" y2="220" stroke="#06b6d4" stroke-width="2"/>
+  <line x1="650" y1="245" x2="820" y2="245" stroke="#06b6d4" stroke-width="2"/>
+  <text x="735" y="237" text-anchor="middle" font-family="Arial" font-size="11" fill="#06b6d4">D3 Matches</text>
+
+  <!-- Flows -->
+  <line x1="140" y1="125" x2="185" y2="125" stroke="#60a5fa" stroke-width="2"/>
+  <line x1="270" y1="125" x2="355" y2="125" stroke="#60a5fa" stroke-width="2"/>
+  <line x1="440" y1="140" x2="525" y2="185" stroke="#60a5fa" stroke-width="2"/>
+  <line x1="615" y1="200" x2="650" y2="215" stroke="#22c55e" stroke-width="2"/>
+  <line x1="140" y1="305" x2="355" y2="305" stroke="#60a5fa" stroke-width="2"/>
+  <line x1="440" y1="320" x2="525" y2="385" stroke="#60a5fa" stroke-width="2"/>
+  <line x1="440" y1="305" x2="685" y2="305" stroke="#60a5fa" stroke-width="2"/>
+  <line x1="770" y1="305" x2="855" y2="305" stroke="#a855f7" stroke-width="2"/>
+
+  <!-- Legend -->
+  <rect x="40" y="540" width="250" height="45" rx="5" fill="#1e293b" stroke="#334155"/>
+  <text x="55" y="560" font-family="Arial" font-size="10" fill="#94a3b8">Legend:</text>
+  <circle cx="110" cy="555" r="8" fill="none" stroke="#22c55e" stroke-width="2"/>
+  <text x="125" y="560" font-family="Arial" font-size="9" fill="#94a3b8">Process</text>
+  <rect x="170" y="548" width="20" height="15" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <text x="195" y="560" font-family="Arial" font-size="9" fill="#94a3b8">Entity</text>
+  <line x1="235" y1="555" x2="270" y2="555" stroke="#60a5fa" stroke-width="2"/>
+  <text x="275" y="560" font-family="Arial" font-size="9" fill="#94a3b8">Flow</text>
+</svg>

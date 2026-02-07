@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700">
+  <rect width="1000" height="700" fill="#0f172a"/>
+  <text x="500" y="35" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#667eea">Reconciliation Sequence Diagram</text>
+
+  <!-- Lifelines -->
+  <rect x="80" y="60" width="80" height="35" rx="5" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="120" y="82" text-anchor="middle" font-family="Arial" font-size="11" fill="#f59e0b">Surveyor</text>
+  <line x1="120" y1="95" x2="120" y2="650" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <rect x="230" y="60" width="80" height="35" rx="5" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="270" y="82" text-anchor="middle" font-family="Arial" font-size="11" fill="#3b82f6">Frontend</text>
+  <line x1="270" y1="95" x2="270" y2="650" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <rect x="380" y="60" width="80" height="35" rx="5" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="420" y="82" text-anchor="middle" font-family="Arial" font-size="11" fill="#22c55e">API</text>
+  <line x1="420" y1="95" x2="420" y2="650" stroke="#22c55e" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <rect x="530" y="60" width="80" height="35" rx="5" fill="#1e293b" stroke="#06b6d4" stroke-width="2"/>
+  <text x="570" y="82" text-anchor="middle" font-family="Arial" font-size="11" fill="#06b6d4">GIS</text>
+  <line x1="570" y1="95" x2="570" y2="650" stroke="#06b6d4" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <rect x="680" y="60" width="80" height="35" rx="5" fill="#1e293b" stroke="#ec4899" stroke-width="2"/>
+  <text x="720" y="82" text-anchor="middle" font-family="Arial" font-size="11" fill="#ec4899">Match</text>
+  <line x1="720" y1="95" x2="720" y2="650" stroke="#ec4899" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <rect x="830" y="60" width="80" height="35" rx="5" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+  <text x="870" y="82" text-anchor="middle" font-family="Arial" font-size="11" fill="#a855f7">DB</text>
+  <line x1="870" y1="95" x2="870" y2="650" stroke="#a855f7" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- Messages -->
+  <!-- 1. Upload -->
+  <line x1="120" y1="130" x2="265" y2="130" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="265,127 275,130 265,133" fill="#60a5fa"/>
+  <text x="190" y="125" font-family="Arial" font-size="10" fill="#94a3b8">1: Upload Files</text>
+
+  <line x1="270" y1="150" x2="415" y2="150" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="415,147 425,150 415,153" fill="#60a5fa"/>
+  <text x="340" y="145" font-family="Arial" font-size="10" fill="#94a3b8">2: POST /upload</text>
+
+  <line x1="420" y1="170" x2="565" y2="170" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="565,167 575,170 565,173" fill="#60a5fa"/>
+  <text x="490" y="165" font-family="Arial" font-size="10" fill="#94a3b8">3: Process GIS</text>
+
+  <line x1="570" y1="190" x2="865" y2="190" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="865,187 875,190 865,193" fill="#60a5fa"/>
+  <text x="710" y="185" font-family="Arial" font-size="10" fill="#94a3b8">4: Store Parcels</text>
+
+  <line x1="865" y1="210" x2="575" y2="210" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <polygon points="575,207 565,210 575,213" fill="#22c55e"/>
+  <text x="720" y="225" font-family="Arial" font-size="10" fill="#94a3b8">5: Saved OK</text>
+
+  <!-- Reconciliation -->
+  <rect x="260" y="260" width="20" height="100" fill="#3b82f6" opacity="0.5"/>
+  <rect x="410" y="270" width="20" height="180" fill="#22c55e" opacity="0.5"/>
+  <rect x="710" y="280" width="20" height="150" fill="#ec4899" opacity="0.5"/>
+
+  <line x1="270" y1="270" x2="415" y2="270" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="415,267 425,270 415,273" fill="#60a5fa"/>
+  <text x="340" y="265" font-family="Arial" font-size="10" fill="#94a3b8">6: POST /reconcile</text>
+
+  <line x1="420" y1="290" x2="715" y2="290" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="715,287 725,290 715,293" fill="#60a5fa"/>
+  <text x="560" y="285" font-family="Arial" font-size="10" fill="#94a3b8">7: Run Matching</text>
+
+  <line x1="720" y1="310" x2="865" y2="310" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="865,307 875,310 865,313" fill="#60a5fa"/>
+  <text x="790" y="305" font-family="Arial" font-size="10" fill="#94a3b8">8: Get Records</text>
+
+  <line x1="865" y1="330" x2="725" y2="330" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <polygon points="725,327 715,330 725,333" fill="#22c55e"/>
+  <text x="790" y="345" font-family="Arial" font-size="10" fill="#94a3b8">9: Records</text>
+
+  <text x="740" y="375" font-family="Arial" font-size="9" fill="#ec4899">Fuzzy Match</text>
+  <text x="740" y="390" font-family="Arial" font-size="9" fill="#ec4899">Algorithm</text>
+
+  <line x1="720" y1="420" x2="865" y2="420" stroke="#60a5fa" stroke-width="2"/>
+  <polygon points="865,417 875,420 865,423" fill="#60a5fa"/>
+  <text x="790" y="415" font-family="Arial" font-size="10" fill="#94a3b8">10: Save Matches</text>
+
+  <line x1="715" y1="440" x2="425" y2="440" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <polygon points="425,437 415,440 425,443" fill="#22c55e"/>
+  <text x="560" y="455" font-family="Arial" font-size="10" fill="#94a3b8">11: Match Results</text>
+
+  <line x1="415" y1="470" x2="275" y2="470" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <polygon points="275,467 265,470 275,473" fill="#22c55e"/>
+  <text x="340" y="485" font-family="Arial" font-size="10" fill="#94a3b8">12: Response</text>
+
+  <line x1="265" y1="500" x2="125" y2="500" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <polygon points="125,497 115,500 125,503" fill="#22c55e"/>
+  <text x="190" y="515" font-family="Arial" font-size="10" fill="#94a3b8">13: Display Results</text>
+
+  <!-- Legend -->
+  <rect x="50" y="550" width="300" height="70" rx="5" fill="#1e293b" stroke="#334155"/>
+  <text x="65" y="575" font-family="Arial" font-size="11" font-weight="bold" fill="#94a3b8">Legend:</text>
+  <line x1="65" y1="595" x2="115" y2="595" stroke="#60a5fa" stroke-width="2"/>
+  <text x="125" y="600" font-family="Arial" font-size="10" fill="#94a3b8">Request</text>
+  <line x1="180" y1="595" x2="230" y2="595" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="240" y="600" font-family="Arial" font-size="10" fill="#94a3b8">Response</text>
+</svg>
